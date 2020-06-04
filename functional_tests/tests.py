@@ -10,11 +10,12 @@ class NewVisitorTest(StaticLiveServerTestCase):
     
     @classmethod
     def setUpClass(cls):
+        # cls.server_url = 'http://47.103.1.96/'
         cls.server_url = 'http://127.0.0.1:8000/'
         super().setUpClass()
     
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls):\
         super().tearDownClass()
 
     def setUp(self):
@@ -106,16 +107,16 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         # 她访问那个URL，发现待办事项清单还在
 
-    # def test_layout_and_styling(self):
-    #     # 伊迪丝访问首页
-    #     self.browser.get(self.server_url)
-    #     self.browser.set_window_size(1024, 768)
+    def test_layout_and_styling(self):
+        # 伊迪丝访问首页
+        self.browser.get(self.server_url)
+        self.browser.set_window_size(1024, 768)
 
-    #     # 她看到啊输入框完美地居中显示
-    #     inputbox = self.browser.find_element_by_id('id_new_item')
-    #     inputbox.send_keys('testing\\n')
-    #     self.assertAlmostEqual(
-    #         inputbox.location['x'] + inputbox.size['width'] / 2,
-    #         512,
-    #         delta=10
-    #     )
+        # 她看到啊输入框完美地居中显示
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('testing\\n')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=10
+        )
