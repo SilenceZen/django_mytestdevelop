@@ -119,6 +119,14 @@ class ListViewTest(TestCase):
         response = self.client.post('/lists/%d/' % correct_list.id, data={'item_text': 'A new item for an existing list'})
         self.assertRedirects(response, '/lists/%d/' % correct_list.id)
 
+    def test_validation_errors_end_up_on_lists_page(self):
+        list_ = List.objects.create()
+        response = self.client.post('/lists/%d/' % list_.id, data={'item_text': ''})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'lists/list.html')
+        expected_error = "你不能输入一个空的列表值"
+        self.assertContains(response, expected_error)
+
 class NewListTest(TestCase):
     
     def test_saving_a_POST_request(self):
