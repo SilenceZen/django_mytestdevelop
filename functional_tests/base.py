@@ -23,7 +23,9 @@ class FunctionTest(StaticLiveServerTestCase):
         self.browser = webdriver.Chrome(options=self.delete_devtools_listening())
         self.browser.implicitly_wait(3)
 
-        
+    def get_item_input_box(self):
+        return self.browser.find_element_by_id('id_text')
+
     def tearDown(self):
         self.browser.quit()
 
