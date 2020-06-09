@@ -4,6 +4,8 @@ from django.test import TestCase
 from lists.models import Item, List
 from lists.views import home_page
 from django.utils.html import escape
+from django.urls import resolve
+from lists.forms import ItemForm
 import re
 
 
@@ -15,18 +17,15 @@ def remove_csrf(response, expected_html):
     return observed_html, expected_html
 
 
-# class HomePageTest(TestCase):
-#     def test_root_url_resolves_to_home_page_view(self):
-#         found = resolve('/')
-#         self.assertEqual(found.func,  home_page)
+class HomePageTest(TestCase):
+    
+    def test_home_page_reders_home_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'lists/home.html')
 
-#     def test_home_page_returns_corrent_html(self):
-#         request = HttpRequest()
-#         response = home_page(request)
-#         expected_html = render_to_string('home.html', request=request)
-#         response, expected_html = remove_csrf(response, expected_html)
-#         self.assertEqual(response, expected_html)
-
+    def test_home_page_uses_item_forms(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
 # class ItemModelTest(TestCase):
 #     def test_saving_and_retrieving_items(self):
